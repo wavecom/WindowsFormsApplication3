@@ -21,6 +21,7 @@ namespace WindowsFormsApplication3
         public int ID { get; set; }
         #endregion
 
+        #region Funktionen
         public edit(int id, string vorname, string nachname, string ort, string iban)
         {
             InitializeComponent();
@@ -29,11 +30,6 @@ namespace WindowsFormsApplication3
             Nachname = nachname;
             Ort = ort;
             Iban = iban;
-        }
-
-        private void saveBTN_Click(object sender, EventArgs e)
-        {
-
         }
 
         public void setTextBoxen(){
@@ -74,7 +70,7 @@ namespace WindowsFormsApplication3
         {
             SqlConnection con = new SqlConnection(Form1.constr);
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.kunden (Vorname,Nachname,Ort,Iban) VALUES (@vorname,@nachname,@ort,@iban)", con);
+            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.kunden (Vorname,Nachname,Wohnort,Iban) VALUES (@vorname,@nachname,@ort,@iban)", con);
 
             con.Open();
 
@@ -87,5 +83,13 @@ namespace WindowsFormsApplication3
 
             con.Close();
         }
+        #endregion
+
+        #region Event Listener
+        private void saveBTN_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

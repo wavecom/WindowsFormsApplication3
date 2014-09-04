@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <Server>LBW7\SAGE</Server>
+  <Datenbank>kunden</Datenbank>
+  <Benutzer>sa</Benutzer>
+  <Passwort>iwm</Passwort>
+  <NT-Anmeldung>true</NT-Anmeldung>
+</config>

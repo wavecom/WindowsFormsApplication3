@@ -8,12 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-
-
-/* Datenbank Login in .xml
- * Neue Mitarbeiter anlegen
- * Nach Edit neu laden
- * */
+using System.Xml;
 
 namespace WindowsFormsApplication3
 {
@@ -28,6 +23,20 @@ namespace WindowsFormsApplication3
         public Form1()
         {
             InitializeComponent();
+            XmlDocument doc = new XmlDocument();
+            doc.Load("C:\\Users\\lbroichhaus\\Documents\\Visual Studio 2013\\Projects\\WindowsFormsApplication3\\WindowsFormsApplication3\\config.xml");
+            XmlNode config = doc.SelectSingleNode("/config");
+            string srv = config.ChildNodes[0].InnerText;
+            string db = config.ChildNodes[1].InnerText;
+            string usr = config.ChildNodes[2].InnerText;
+            string pw = config.ChildNodes[3].InnerText;
+            string trusted = config.ChildNodes[4].InnerText;
+            if (trusted == "true"){
+                constr = String.Format("Server={0};Database={1};Trusted_Connection=True;", srv, db);
+            }else{
+                constr = String.Format("Server={0};Database={1};User Id={2};Password={3};",srv ,db, usr, pw);
+            }
+            loadSQL();
         }
         #endregion
 
@@ -72,17 +81,8 @@ namespace WindowsFormsApplication3
             DialogResult dr = login.ShowDialog();
 
             if (dr == DialogResult.OK) {
-
-                string sql = "SELECT * FROM dbo.kunden";
                 constr = login.getString();
-                SqlConnection connection = new SqlConnection(constr);
-                SqlDataAdapter dataadapter = new SqlDataAdapter(sql, connection);
-                DataSet ds = new DataSet();
-                connection.Open();
-                dataadapter.Fill(ds, "kunden");
-                connection.Close();
-                dataGridView1.DataSource = ds;
-                dataGridView1.DataMember = "kunden";
+                loadSQL();
                 login.Close();
             }
         }
@@ -97,12 +97,25 @@ namespace WindowsFormsApplication3
                 edit.getTextBoxen();
                 edit.add();
                 edit.Close();
+                loadSQL();
             }
         }
         #endregion
 
         #region Funktionen
 
+        private void loadSQL()
+        {
+            string sql = "SELECT * FROM dbo.kunden";
+            SqlConnection connection = new SqlConnection(constr);
+            SqlDataAdapter dataadapter = new SqlDataAdapter(sql, connection);
+            DataSet ds = new DataSet();
+            connection.Open();
+            dataadapter.Fill(ds, "kunden");
+            connection.Close();
+            dataGridView1.DataSource = ds;
+            dataGridView1.DataMember = "kunden";
+        }
         #endregion
     }
 }

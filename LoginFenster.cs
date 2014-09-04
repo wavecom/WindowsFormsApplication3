@@ -12,10 +12,17 @@ namespace WindowsFormsApplication3
 {
     public partial class LoginFenster : Form
     {
+
+        #region Konstruktor
+
         public LoginFenster()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Event Listener
 
         private void trusted_CheckedChanged(object sender, EventArgs e)
         {
@@ -24,6 +31,14 @@ namespace WindowsFormsApplication3
             tb_usr.Enabled = b;
         }
 
+        private void loginbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region Funktionen
         public string getString()
         {
             string connectionString;
@@ -50,10 +65,7 @@ namespace WindowsFormsApplication3
             }
             return connectionString;
         }
+        #endregion
 
-        private void loginbtn_Click(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
